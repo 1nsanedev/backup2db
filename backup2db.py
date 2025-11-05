@@ -84,14 +84,14 @@ def is_backup_compatible(backup_dir) -> tuple[bool, iOSVersion|None]:
 
     if not os.path.exists(backup_info):
         print(f"[!] Info.plist: not found in {backup_dir}")
-        return False, None
+        exit(-1)
 
     try:
         with open(backup_info, "rb") as bifp:
             info = plistlib.loads(bifp.read())
     except Exception as e:
         print(f"[!] Info.plist: {e}")
-        return False, None
+        exit(-1)
 
     target_version = iOSVersion(
             info.get(TARGET_BACKUP_INFO_KEY)
